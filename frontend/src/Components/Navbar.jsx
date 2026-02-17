@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useReducer } from 'react';
-import logo from '../assets/logo.png'
+
 import { Link, useNavigate } from 'react-router-dom';
 import { ProfileContext } from '../profilecontext';
 import axios from 'axios'
@@ -180,8 +180,8 @@ export default function Navbar({sidebar_open}) {
         <div className='flex justify-between h-full items-center ml-8'>
 
             {/* Logo */}
-            <div className= 'logo mr-7 '>
-             <Link to = "/">   <img src={logo} alt = "" className='w-full object-cover'/></Link>
+            <div className= ' mr-7  h-10 w-full '>
+             <Link to = "/">   <img src="/logo.png" alt = "" className='w-full object-cover h-full '/></Link>
             </div>
 	
 			<div className='h-12 relative max-xl:hidden '>
