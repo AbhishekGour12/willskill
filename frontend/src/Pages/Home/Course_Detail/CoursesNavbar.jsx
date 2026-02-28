@@ -13,15 +13,14 @@ import HidebarImg from '../../../assets/Hidebar.png';
 import { Loader } from 'rsuite';
 import { useNavigate } from 'react-router-dom';
 
-let url = import.meta.env.VITE_URL;
 
-export default function CoursesNavbar() {
+
+export default function CoursesNavbar({courses, courses1, courses2, loading, setCourses1}) {
   const Navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState([]);
-  const [courses1, setCourses1] = useState([]);
-  const [courses2, setCourses2] = useState([]);
+  
+  
+  
   const [form, setForm] = useState('');
 
   const ShowBar = () => {
@@ -36,31 +35,7 @@ export default function CoursesNavbar() {
     document.querySelector('.search2').style.display = 'none';
   };
 
-  const data = async () => {
-    try {
-      setLoading(true);
-      const result = await axios.post(`${url}course_detail`);
-      const array = result.data;
-
-      setCourses1(array);
-      setCourses2(array);
-
-      const uniqueTypes = [...new Set(array.map(course => course.type))];
-      setCourses(uniqueTypes);
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    data();
-    const interval = setInterval(() => {
-      data();
-    }, 120000);
-    return () => clearInterval(interval);
-  }, []);
+ 
 
   const course_filter1 = (type) => {
     courses.forEach((t) => {
@@ -140,7 +115,7 @@ export default function CoursesNavbar() {
                   Loading categories...
                 </div>
               ) : (
-                courses.map((type) => (
+                courses?.map((type) => (
                   <div
                     className="course_type rounded-full hover:bg-purple-400 hover:text-black hover:cursor-pointer"
                     onClick={() => course_filter1(type)}

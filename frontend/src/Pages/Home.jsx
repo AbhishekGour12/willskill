@@ -18,7 +18,10 @@ let url = import.meta.env.VITE_URL
 
 function Home({sidebar_open, profile, logout}){ 
   let [file, setFile] = useState();
-  
+  const [loading, setLoading] = useState();
+  const [courses, setCourses] = useState([]);
+  const [courses1, setCourses1] = useState([]);
+  const [courses2, setCourses2] = useState([]);
   //https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=600
   //https://images.pexels.com/photos/574073/pexels-photo-574073.jpeg?auto=compress&cs=tinysrgb&w=600
   //https://cdn.pixabay.com/photo/2019/10/09/07/28/development-4536630_640.png
@@ -52,6 +55,32 @@ function Home({sidebar_open, profile, logout}){
     localStorage.removeItem('users')
 
   },[])
+  
+   const data = async () => {
+      try {
+        setLoading(true);
+        const result = await axios.post(`${url}course_detail`);
+        const array = result.data;
+        console.log(array)
+        setCourses1(array);
+        setCourses2(array);
+  
+        const uniqueTypes = [...new Set(array.map(course => course.type))];
+        setCourses(uniqueTypes);
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      data();
+      const interval = setInterval(() => {
+        data();
+      }, 120000);
+      return () => clearInterval(interval);
+    }, []);
     return(
         <>
          
@@ -102,7 +131,7 @@ function Home({sidebar_open, profile, logout}){
          </Swiper>
           {/* Main Container */}
         
-         <Course_details/>
+         <Course_details courses={courses} courses1={courses1} courses2={courses2} loading={loading} setCourses1={setCourses1}/>
 
        
 

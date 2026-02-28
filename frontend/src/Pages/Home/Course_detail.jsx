@@ -10,7 +10,7 @@ import web from '../../assets/web.jpg';
 import html from '../../assets/html.jpg';
 import css from '../../assets/css.jpg';
 
-export default function Course_detail() {
+export default function Course_detail({courses, courses1, courses2, loading, setCourses1}) {
   const logos = [html, css, js, react, java, web, js, html, css, js, react, java, web, js];
 
   return (
@@ -29,7 +29,7 @@ export default function Course_detail() {
 
         {/* 🔹 Courses Section */}
         <div className='mb-20'>
-          <CoursesNavbar />
+          <CoursesNavbar courses={courses} courses1={courses1} courses2={courses2} loading={loading} setCourses1={setCourses1} />
         </div>
 
         {/* 🔹 Growth Promotion Section */}
